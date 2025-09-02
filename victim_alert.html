@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Victim Alert | Emergency Response System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    .alert-container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 30px;
+      text-align: center;
+    }
+    .sos-btn {
+      font-size: 24px;
+      padding: 20px 40px;
+      border-radius: 50px;
+    }
+    .location-box {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container alert-container">
+    <h2 class="mb-4">🚨 Emergency Alert</h2>
+    <p>If you are in danger, press the button below to alert nearby volunteers.</p>
+
+    <div class="mb-3">
+      <textarea class="form-control" id="dangerDetails" rows="3" placeholder="Describe your emergency (optional)..."></textarea>
+    </div>
+
+    <button class="btn btn-danger sos-btn mb-3" onclick="sendSOS()">🔴 Send SOS</button>
+
+    <div class="location-box">
+      <strong>Current Location (Simulated):</strong><br>
+      Latitude: <span id="lat">--</span> | Longitude: <span id="lng">--</span>
+    </div>
+
+    <div id="sosStatus" class="mt-4 text-success fw-bold"></div>
+  </div>
+
+  <script>
+    // Simulate location fetch
+    window.onload = function () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, locationError);
+      } else {
+        document.getElementById("lat").innerText = "Not Supported";
+        document.getElementById("lng").innerText = "Not Supported";
+      }
+    };
+
+    function showPosition(position) {
+      document.getElementById("lat").innerText = position.coords.latitude.toFixed(4);
+      document.getElementById("lng").innerText = position.coords.longitude.toFixed(4);
+    }
+
+    function locationError() {
+      document.getElementById("lat").innerText = "Unavailable";
+      document.getElementById("lng").innerText = "Unavailable";
+    }
+
+    function sendSOS() {
+      const details = document.getElementById("dangerDetails").value || "No description";
+      const lat = document.getElementById("lat").innerText;
+      const lng = document.getElementById("lng").innerText;
+
+      // Placeholder logic — replace this with real API call
+      console.log("🚨 SOS Sent!");
+      console.log("Location:", lat, lng);
+      console.log("Details:", details);
+
+      document.getElementById("sosStatus").innerText = "🚨 SOS Alert Sent! Nearby volunteers are being notified.";
+
+      // Optional: auto-clear message after 10 seconds
+      setTimeout(() => {
+        document.getElementById("sosStatus").innerText = "";
+        document.getElementById("dangerDetails").value = "";
+      }, 10000);
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
