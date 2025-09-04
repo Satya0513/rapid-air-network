@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('https://shorthand.com/the-craft/10-examples-interactive-maps/assets/nqvH8rI5la/shorthand-the-craft-interactive-maps-amazon-map-background-texture-2-2560x1440.jpg') center center / cover no-repeat fixed;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.rapido-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcbf1e;
+  padding: 8px 16px;
+  border-radius: 40px;
+}
+
+.rapido-text {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 24px;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #fcbf1e;
+}
+
+.main-content {
+  text-align: center;
+  padding: 100px 20px 40px;
+}
+
+.main-content h1 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #222;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Input fields with embedded icons */
+.input-icon {
+  width: 300px;
+  padding: 12px 12px 12px 42px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-repeat: no-repeat;
+  background-position: 12px center;
+  background-size: 20px;
+  background-color: white;
+}
+
+/* Background icons via SVG */
+.input-icon.pickup {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/014/022/352/original/gps-icon-logo-design-map-pointer-icon-pin-location-symbol-vector.jpg');
+}
+
+.input-icon.drop {
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/svgs/solid/map-pin.svg');
+}
+
+.book-btn {
+  width: 300px;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #fcbf1e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.book-btn:hover {
+  background-color: #e0a800;
+}
