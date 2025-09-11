@@ -1,0 +1,77 @@
+/* General page spacing */
+body {
+  padding-top: 70px; /* to avoid navbar overlap */
+  background: #f9f9f9;
+}
+
+/* Navbar mobile alignment */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    text-align: right;
+  }
+  .navbar-nav {
+    margin-left: auto;
+  }
+}
+
+/* Main section */
+.main-content {
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+/* Role card images */
+.role-icon {
+  width: 120px;       /* same size for both */
+  height: 120px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Card hover effect */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Navbar links */
+.navbar .nav-link {
+  position: relative;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none !important;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.navbar .nav-link:hover {
+  color: #dc3545;
+}
+
+/* Animated underline effect */
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #dc3545;
+  transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::after {
+  width: 100%;
+}
+/* Hover effect for role cards */
+.role-card:hover {
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}

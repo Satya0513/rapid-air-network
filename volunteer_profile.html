@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Volunteer Profile | Rapid Aid Network</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #ffffff; /* white background */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .profile-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    .profile-card h2 {
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #b00020;
+    }
+    .info {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .info label {
+      font-weight: bold;
+      color: #b00020;
+      margin-top: 10px;
+    }
+    .form-control {
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+    .btn-save {
+      margin-top: 15px;
+      background: #b00020;
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 20px;
+      border: none;
+    }
+    .btn-save:hover {
+      background: #ff3333;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <h2>Volunteer Profile</h2>
+    
+    <form>
+      <div class="info">
+        <label>Full Name:</label>
+        <input type="text" class="form-control" placeholder="Enter your name" required>
+
+        <label>Location:</label>
+        <input type="text" class="form-control" placeholder="Enter your city" required>
+
+        <label>Contact Number:</label>
+        <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+
+        <label>Email:</label>
+        <input type="email" class="form-control" placeholder="yourname@example.com" required>
+
+        <label>Availability:</label>
+        <input type="text" class="form-control" placeholder="e.g., Weekdays 6 PM – 10 PM" required>
+
+        <label>Skills:</label>
+        <input type="text" class="form-control" placeholder="e.g., CPR, AED, First Aid" required>
+      </div>
+
+      <button type="submit" class="btn-save">Save Profile</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - Heart Help</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffffff;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .form-container {
+      max-width: 700px;
+      width: 100%;
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* same as volunteer profile */
+    }
+    h2 {
+      text-align: center;
+      color: #b00020;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+      color: #b00020;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .checkbox-group label {
+      margin-right: 15px;
+      font-weight: normal;
+      color: #333;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #b00020;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ff3333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>User Profile</h2>
+  <form>
+    <!-- Personal Details -->
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name" required>
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" required>
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10-digit phone number" required>
+
+    <label for="address">Address</label>
+    <textarea id="address" rows="2" placeholder="Enter your address"></textarea>
+
+    <!-- Emergency Contact -->
+    <label for="emergency">Emergency Contact</label>
+    <input type="tel" id="emergency" pattern="[0-9]{10}" placeholder="Emergency contact number" required>
+
+    <!-- Health Conditions -->
+    <label>Known Heart Conditions</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="condition" value="cad"> Coronary Artery Disease</label>
+      <label><input type="checkbox" name="condition" value="heartattack"> Past Heart Attack</label>
+      <label><input type="checkbox" name="condition" value="heartfailure"> Heart Failure</label>
+      <label><input type="checkbox" name="condition" value="arrhythmia"> Arrhythmia</label>
+      <label><input type="checkbox" name="condition" value="valve"> Valve Disease</label>
+      <label><input type="checkbox" name="condition" value="congenital"> Congenital Heart Disease</label>
+      <label><input type="checkbox" name="condition" value="other"> Other</label>
+    </div>
+
+    <!-- Medications -->
+    <label for="medications">Current Medications</label>
+    <textarea id="medications" rows="2" placeholder="List your medicines (if any)"></textarea>
+
+    <!-- Allergies -->
+    <label for="allergies">Allergies</label>
+    <textarea id="allergies" rows="2" placeholder="List any allergies"></textarea>
+
+    <!-- Consent -->
+    <label>
+      <input type="checkbox" required> I consent to share my health info & location during emergencies.
+    </label>
+
+    <!-- Submit -->
+    <button type="submit">Save Profile</button>
+  </form>
+</div>
+
+</body>
+</html>
