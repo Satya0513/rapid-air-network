@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Rapid Air Network</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      scroll-behavior: smooth;
+    }
+.hero {
+  background: url("https://www.surflifesaving.com.au/wp-content/uploads/sites/2/2021/10/Generic_FeatureImage7.jpg") no-repeat center center;
+  background-size: cover;       /* makes image cover entire section */
+  height: 400px;                /* ensures the hero has visible height */
+  color:darkcyan;
+  text-align: center;
+  display: flex;                /* center content vertically */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+    .section-title {
+      font-weight: bold;
+      margin-top: 60px;
+      margin-bottom: 20px;
+    }
+    .card-icon {
+  font-size: 50px;
+  color: #0d6efd;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.card-icon:hover {
+  transform: scale(1.3);
+  color: #dc3545; /* red on hover */
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+} 
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero position-relative">
+  <!-- Background image -->
+  <img src="https://images.unsplash.com/photo-1589561084283-930aa7b1c3a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
+       class="img-fluid w-100 h-100 position-absolute top-0 start-0" 
+       style="object-fit: cover; z-index: -1;" 
+       alt="Ambulance on road">
+
+  <!-- Text and button on top -->
+  <div class="container text-center text-white position-relative">
+    <h1 class="display-4">Saving Lives, One Alert at a Time</h1>
+    <p class="lead">Our platform connects victims in danger with nearby volunteers. When every second counts, help is just around the corner.</p>
+    <a href="#join" class="btn btn-warning btn-lg mt-3">Become a Volunteer</a>
+  </div>
+</section>
+
+  <!-- Who We Are -->
+  <section class="container text-center">
+    <h2 class="section-title">Who We Are</h2>
+    <p>We are creating a people-powered emergency response platform. When victims send alerts, we notify nearby volunteers within a 5KM radius who can offer real-time help.</p>
+  </section>
+
+  <!-- How It Works -->
+  <!-- Roles / Pages Section -->
+<section class="container my-5">
+  <h2 class="section-title text-center">Quick Access</h2>
+  <div class="row justify-content-center g-4">
+
+    <!-- Victim Alerts -->
+    <div class="col-md-4">
+      <div class="border p-4 rounded shadow-sm text-center role-card" 
+           style="cursor:pointer;" 
+           onclick="window.location.href='victim.html'">
+        <h4>🆘 Victim Alerts</h4>
+        <p>Send or view emergency alerts as a victim.</p>
+        <button class="btn btn-danger mt-2" onclick="window.location.href='victimmain.html'">Go to Victim Page</button>
+      </div>
+    </div>
+
+    <!-- Volunteers Respond -->
+    <div class="col-md-4">
+      <div class="border p-4 rounded shadow-sm text-center role-card" 
+           style="cursor:pointer;" 
+           onclick="window.location.href='volunteer.html'">
+        <h4>🤝 Volunteers Respond</h4>
+        <p>Respond to incoming alerts as a volunteer.</p>
+        <button class="btn btn-success mt-2" onclick="window.location.href='volunteers2.html'">Go to Volunteer Page</button>
+      </div>
+    </div>
+
+    <!-- Help Arrives -->
+    <div class="col-md-4">
+      <div class="border p-4 rounded shadow-sm text-center role-card" 
+           style="cursor:pointer;" 
+           onclick="window.location.href='help_arrives.html'">
+        <h4>🚑 Help Arrives</h4>
+        <p>Track live rescues or view status updates of help arriving.</p>
+        <button class="btn btn-primary mt-2" onclick="window.location.href='help arrives.html'">Go to Help Page</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Victims & Volunteers -->
+<section class="container">
+  <h2 class="section-title text-center">Roles: Victims & Volunteers</h2>
+  <div class="row justify-content-center">
+    
+    <!-- Victim Card -->
+    <div class="col-md-5 mb-3">
+      <div class="border p-4 rounded shadow-sm mb-3 text-center role-card" 
+           style="cursor:pointer;" 
+           onclick="window.location.href='victim.html'">
+        <h4>🆘 Victims</h4>
+        <ul class="text-start">
+          <li>Register as users</li>
+          <li>Send alerts via app or web</li>
+          <li>Receive live help notifications</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Volunteer Card -->
+    <div class="col-md-5 mb-3">
+      <div class="border p-4 rounded shadow-sm mb-3 text-center role-card" 
+           style="cursor:pointer;" 
+           onclick="window.location.href='volunteer.html'">
+        <h4>🤝 Volunteers</h4>
+        <ul class="text-start">
+          <li>Sign up to help others</li>
+          <li>Get notified if within 5KM</li>
+          <li>Accept and respond to alerts</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Why 5KM Radius -->
+  <section class="container text-center">
+    <h2 class="section-title">Why 5KM Radius?</h2>
+    <p>We use smart geo-location to notify only those volunteers who are close enough to help quickly. This improves response time and increases chances of saving lives.</p>
+    <img src="https://images.unsplash.com/photo-1589561084283-930aa7b1c3a6?auto=format&fit=crop&w=1200&h=500" class="img-fluid rounded mt-3" alt="Ambulance on road">
+    </section>
+
+  <!-- Vision & Impact -->
+  <section class="container text-center">
+    <h2 class="section-title">Our Vision</h2>
+    <p>We aim to create a safer community by connecting people who care with those in need — fast. Together, we can build a smarter and more responsive emergency ecosystem.</p>
+  </section>
+
+  <!-- Call to Action -->
+  <section id="join" class="container text-center mb-5">
+    <h2 class="section-title">Join Us</h2>
+    <p>Become a volunteer today and make a difference in someone’s life. Your action could save lives.</p>
+    <button class="btn btn-primary btn-lg" onclick="joinNow()">Sign Up as Volunteer</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    © 2025 Emergency Response System | All Rights Reserved
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function joinNow() {
+      alert("Redirecting to volunteer registration...");
+      // Replace with your registration link
+      window.location.href = "volunteer_signup.html";
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Victim Alert | Emergency Response System</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  body { background: #f8f9fa; font-family: "Segoe UI", Roboto, Arial, sans-serif; }
+  .alert-container { max-width: 720px; margin: 20px auto; background: white; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.1); padding: 20px; }
+  .sos-btn { font-size: 24px; padding: 15px 40px; border-radius: 50px; }
+  .coords, .small-muted { font-family: monospace; font-size: .9rem; color: #6c757d; }
+  #map { height: 400px; width: 100%; border-radius: 12px; margin-top: 20px; }
+  .volunteer-status { margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="container alert-container">
+  <h2 class="mb-3 text-danger text-center">🚨 Emergency Alert</h2>
+
+  <div class="mb-2">
+    <label class="form-label">Your Name (optional)</label>
+    <input id="victimName" class="form-control" placeholder="e.g. Priya">
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Describe your emergency (optional)</label>
+    <textarea id="dangerDetails" class="form-control" rows="2" placeholder="e.g. trapped, injured"></textarea>
+  </div>
+
+  <div class="d-flex justify-content-center gap-2 mb-2">
+    <button class="btn btn-danger sos-btn" id="sosBtn">🔴 Send SOS</button>
+    <button class="btn btn-primary" id="startBtn">Start Sharing Location</button>
+    <button class="btn btn-secondary" id="stopBtn" disabled>Stop Sharing</button>
+  </div>
+
+  <hr>
+
+  <div class="small-muted">Live Coordinates</div>
+  <div class="coords mb-1">Latitude: <span id="lat">--</span> | Longitude: <span id="lng">--</span></div>
+  <div class="small-muted">Address</div>
+  <div class="coords mb-1" id="address">--</div>
+
+  <div class="small-muted">Last Sent</div>
+  <div id="lastSent">—</div>
+  <div id="status" class="mt-2 text-success fw-bold">Ready.</div>
+
+  <div id="map"></div>
+  <div class="volunteer-status" id="volStatus"></div>
+</div>
+
+<!-- Firebase + Map + Geoapify -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getDatabase, ref, set, push, onChildAdded, onValue } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyATW3DpocYyYSjB26Vs6FXVAraxChM9eX8",
+  authDomain: "heart-ef738.firebaseapp.com",
+  databaseURL: "https://heart-ef738-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  projectId: "heart-ef738",
+  storageBucket: "heart-ef738.firebasestorage.app",
+  messagingSenderId: "909650774585",
+  appId: "1:909650774585:web:b54ca3aa48b6ddbea55be8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Victim ID
+let victimId = localStorage.getItem('victimId');
+if(!victimId) {
+  victimId = 'v_' + Math.random().toString(36).slice(2);
+  localStorage.setItem('victimId', victimId);
+}
+
+// DOM Elements
+const sosBtn = document.getElementById('sosBtn');
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const statusEl = document.getElementById('status');
+const latEl = document.getElementById('lat');
+const lngEl = document.getElementById('lng');
+const lastSentEl = document.getElementById('lastSent');
+const addressEl = document.getElementById('address');
+const volStatusEl = document.getElementById('volStatus');
+
+let watchId = null;
+let lastSendTs = 0;
+const SEND_THROTTLE_MS = 3000;
+let map, victimMarker, volunteerMarkers = {};
+
+// --- Initialize Map ---
+function initMap(lat=17.385044, lng=78.486671) {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat, lng},
+    zoom: 14
+  });
+}
+
+// --- Reverse Geocoding ---
+async function fetchAddress(lat, lng) {
+  const apiKey = "020aae3b4d254578bfb32fc455ae3fb0";
+  const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=${apiKey}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.features[0].properties.formatted || "Unknown location";
+  } catch(e) { console.error(e); return "Unknown location"; }
+}
+
+// --- Send location to Firebase ---
+function sendLocation(lat, lng) {
+  const now = Date.now();
+  if(now - lastSendTs < SEND_THROTTLE_MS) return;
+  lastSendTs = now;
+
+  fetchAddress(lat, lng).then(address => {
+    addressEl.textContent = address;
+
+    const payload = {
+      id: victimId,
+      name: document.getElementById('victimName').value || 'Anonymous',
+      details: document.getElementById('dangerDetails').value || '',
+      latitude: lat,
+      longitude: lng,
+      timestamp: new Date().toISOString(),
+      address
+    };
+
+    const newRef = push(ref(db, 'victims'));
+    set(newRef, payload)
+      .then(() => {
+        lastSentEl.textContent = new Date().toLocaleTimeString();
+        statusEl.textContent = '✅ Alert sent at ' + new Date().toLocaleTimeString();
+        statusEl.style.color = 'green';
+      })
+      .catch(err => {
+        console.error(err);
+        statusEl.textContent = '⚠️ Failed to send alert.';
+        statusEl.style.color = 'orange';
+      });
+  });
+}
+
+// --- Geolocation ---
+function onPositionSuccess(position) {
+  const lat = position.coords.latitude;
+  const lng = position.coords.longitude;
+  latEl.textContent = lat.toFixed(6);
+  lngEl.textContent = lng.toFixed(6);
+  statusEl.textContent = '🔴 Sharing live location…';
+  statusEl.style.color = '#d63384';
+  initMap(lat, lng);
+  if(victimMarker) victimMarker.setMap(null);
+  victimMarker = new google.maps.Marker({position:{lat,lng}, map, icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", title:"Victim"});
+  sendLocation(lat, lng);
+}
+function onPositionError(err) {
+  console.warn(err);
+  statusEl.textContent = '❌ Location error: ' + err.message;
+  statusEl.style.color = 'red';
+}
+
+// --- Button Events ---
+sosBtn.addEventListener('click', () => {
+  if(!navigator.geolocation) { alert('Geolocation not supported.'); return; }
+  navigator.geolocation.getCurrentPosition(onPositionSuccess, onPositionError, { enableHighAccuracy:true });
+});
+startBtn.addEventListener('click', () => {
+  if(!navigator.geolocation) { alert('Geolocation not supported.'); return; }
+  startBtn.disabled = true; stopBtn.disabled = false;
+  watchId = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError, { enableHighAccuracy:true });
+});
+stopBtn.addEventListener('click', () => {
+  if(watchId != null) navigator.geolocation.clearWatch(watchId);
+  watchId = null; startBtn.disabled = false; stopBtn.disabled = true;
+  statusEl.textContent = 'Stopped sharing location.'; statusEl.style.color = '#6c757d';
+});
+
+// --- Listen for volunteers ---
+const volunteersRef = ref(db, 'volunteers');
+onValue(volunteersRef, snapshot => {
+  const volData = snapshot.val() || {};
+  volStatusEl.innerHTML = "";
+  Object.keys(volData).forEach(id => {
+    const v = volData[id];
+    // Only show volunteers responding to this victim
+    if(v.targetVictimId === victimId) {
+      volStatusEl.innerHTML += `<div>${v.name} is ${v.status}</div>`;
+      const pos = {lat:v.latitude, lng:v.longitude};
+      if(volunteerMarkers[id]) volunteerMarkers[id].setMap(null);
+      volunteerMarkers[id] = new google.maps.Marker({position: pos, map, icon:"http://maps.google.com/mapfiles/ms/icons/green-dot.png", title:v.name});
+    }
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_KEY"></script>
+</body>
+</html>
